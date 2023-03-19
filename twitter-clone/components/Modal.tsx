@@ -36,10 +36,10 @@ const Modal: React.FC<ModalProps> = ({
   if (!isOpen) {
     return null;
   }
-  return(
+  return (
     <>
-        <div
-            className="
+      <div
+        className="
                 justify-center
                 items-center
                 flex
@@ -53,9 +53,9 @@ const Modal: React.FC<ModalProps> = ({
                 bg-neutral-800
                 bg-opacity-70
             "
-        >
-            <div 
-                className="
+      >
+        <div
+          className="
                     relative
                     w-full
                     lg:w-3/6
@@ -65,10 +65,10 @@ const Modal: React.FC<ModalProps> = ({
                     h-full
                     lg:h-auto
                 "
-            >   
-                {/* Content */}
-                <div 
-                    className="
+        >
+          {/* Content */}
+          <div
+            className="
                         h-full
                         lg:h-auto
                         border-0
@@ -82,15 +82,13 @@ const Modal: React.FC<ModalProps> = ({
                         outline-none
                         focus:outline-none
                     "
-                >
-                    {/* Header */}
-                    <div
-                        className="flex items-center justify-between p-10 rounded-t"
-                    >
-                        <h3 className="text-3xl font-semibold text-white">{title}</h3>
-                        <button
-                            onClick={handleClose}
-                            className="
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between p-10 rounded-t">
+              <h3 className="text-3xl font-semibold text-white">{title}</h3>
+              <button
+                onClick={handleClose}
+                className="
                                 p-1
                                 ml-auto
                                 border-0
@@ -98,32 +96,28 @@ const Modal: React.FC<ModalProps> = ({
                                 hover:opacity-70
                                 transition
                             "
-                        >
-                            <AiOutlineClose size={20}/>
-                        </button>
-                    </div>  
-                    {/* body */}
-                    <div 
-                        className="relative p-10 flex-auto"
-                    >
-
-                    </div>
-                    {/* footer */}
-                    <div 
-                        className="flex flex-col gap-2 p-10"
-                    >
-                        <Button
-                            disabled={disabled}
-                            label={actionLabel}
-                            secondary
-                            fullWidth
-                            large
-                            onClick={handleSubmit}
-                        />
-                    </div>
-                </div>
+              >
+                <AiOutlineClose size={20} />
+              </button>
             </div>
+            {/* body */}
+            <div className="relative p-10 flex-auto">{body}</div>
+            {/* footer */}
+
+            <div className="flex flex-col gap-2 p-10">
+              <Button
+                disabled={disabled}
+                label={actionLabel}
+                secondary
+                fullWidth
+                large
+                onClick={handleSubmit}
+              />
+              {footer}
+            </div>
+          </div>
         </div>
+      </div>
     </>
   );
 };
