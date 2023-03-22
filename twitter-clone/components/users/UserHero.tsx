@@ -12,8 +12,9 @@ const UserHero: React.FC<UserHeroProps> = ({ userId }) => {
       {fetchedUser?.coverImage && (
         <Image
           src={fetchedUser?.coverImage}
+          fill
           alt="Background Image"
-          style={{ objectFit: "cover" }}
+          style={{ objectFit: "cover"  }}
         />
       )}
       <div className="absolute -bottom-16 left-4">
