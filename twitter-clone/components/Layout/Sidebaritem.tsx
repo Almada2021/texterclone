@@ -21,7 +21,6 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
   const { data: currentUser } = useCurrentUser();
   const router = useRouter();
   const handleClick = useCallback(() => {
-    console.log(router.route)
     if (onClick) {
       return onClick();
     }
