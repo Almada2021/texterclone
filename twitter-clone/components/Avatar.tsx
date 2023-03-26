@@ -34,6 +34,7 @@ const Avatar: React.FC<AvatarProps> = ({ userId, isLarge, hasBorder }) => {
     >
       <Image
         fill
+        priority
         style={{
           objectFit: "cover",
           borderRadius: "100%",
