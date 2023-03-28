@@ -22,18 +22,27 @@ const FormTweet: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
   const { mutate: mutatePost } = usePost(postId as string);
   const [body, setBody] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const LengthError = new Error("overflow length");
   const onSubmit = useCallback(async () => {
     try {
       setIsLoading(true);
       const url = isComment ? `/api/comments?postId=${postId}` : "/api/posts";
       const textToast = isComment ? "Your repply is ready" : "Tweet Created";
+      if (body.length >= 255) {
+        throw LengthError;
+      }
       await axios.post(url, { body });
       toast.success(textToast);
       setBody("");
       mutatePosts();
       mutatePost();
     } catch (error) {
-      toast.error("Something went wrong");
+      let text;
+      if (error == LengthError) {
+        toast.error("max length is 255");
+      } else {
+        toast.error("Something went wrong");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -51,10 +60,15 @@ const FormTweet: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
           <div className="w-full">
             <textarea
               disabled={isLoading}
-              onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-                setBody(e.target.value)
+              onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>{
+                if(body.length <= 255){
+                  setBody(e.target.value)
+                }else{
+                  setBody(e.target.value.substring(0,255))
+                }
               }
-              value={body}
+              }
+              value={body.substring(0,254)}
               className="
                 disabled:opacity-80
                 peer
@@ -90,6 +104,33 @@ const FormTweet: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
 
                 "
             >
+              <div
+                className="
+                  w-full
+                  h-full
+                  flex
+                  flex-row
+                  items-start
+
+                "
+              >
+                <p
+                  className={`
+                    ${ body.length >= 255 ? 'text-red-500': body.length >= 240 ? 'text-orange-500' :'text-white'}
+                    text-sm
+                  `}
+                >
+                  {body.length}
+                </p>
+                <p
+                  className="
+                  text-white
+                    text-sm
+                  "
+                >
+                  /255
+                </p>
+              </div>
               <Button
                 disabled={isLoading || !body}
                 onClick={onSubmit}
