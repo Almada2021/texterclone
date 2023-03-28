@@ -1,5 +1,6 @@
 import useCurrentUser from "@/hooks/useCurrentUser";
 import useLoginModal from "@/hooks/useLoginModal";
+import usePost from "@/hooks/usePost";
 import usePosts from "@/hooks/usePosts";
 import useRegisterModal from "@/hooks/useRegisterModal";
 import axios from "axios";
@@ -16,24 +17,28 @@ interface FormProps {
 const FormTweet: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
-  const { data: currentUser, isLoading:loadUser } = useCurrentUser();
+  const { data: currentUser, isLoading: loadUser } = useCurrentUser();
   const { mutate: mutatePosts } = usePosts(postId as string);
+  const { mutate: mutatePost } = usePost(postId as string);
   const [body, setBody] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const onSubmit = useCallback(async () => {
     try {
       setIsLoading(true);
-      await axios.post("/api/posts", { body });
-      toast.success("Tweet Created");
+      const url = isComment ? `/api/comments?postId=${postId}` : "/api/posts";
+      const textToast = isComment ? "Your repply is ready" : "Tweet Created";
+      await axios.post(url, { body });
+      toast.success(textToast);
       setBody("");
       mutatePosts();
+      mutatePost();
     } catch (error) {
       toast.error("Something went wrong");
     } finally {
       setIsLoading(false);
     }
-  }, [body, mutatePosts]);
-  if (loadUser){
+  }, [body, mutatePosts, mutatePost, isComment, postId]);
+  if (loadUser) {
     return null;
   }
   return (
@@ -67,7 +72,7 @@ const FormTweet: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
               placeholder={placeholder}
             ></textarea>
             <hr
-                className="
+              className="
                     opacity-0
                     peer-focus:opacity-100
                     h-[1px]
@@ -77,7 +82,7 @@ const FormTweet: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
                 "
             />
             <div
-                className="
+              className="
                     mt-4
                     flex
                     flex-row
@@ -85,14 +90,13 @@ const FormTweet: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
 
                 "
             >
-                <Button
-                    disabled={isLoading || !body}
-                    onClick={onSubmit}
-                    label="Text"
-                />
+              <Button
+                disabled={isLoading || !body}
+                onClick={onSubmit}
+                label="Text"
+              />
             </div>
           </div>
-
         </div>
       ) : (
         <div className="py-8">
