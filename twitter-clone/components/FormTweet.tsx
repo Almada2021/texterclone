@@ -150,7 +150,7 @@ const FormTweet: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
                             font-bold
                         "
           >
-            Welcome to Twitter
+            Welcome to Texter
           </h1>
           <div className="flex flex-row items-center justify-center gap-4">
             <Button label="Login" onClick={loginModal.onOpen} />
