@@ -44,6 +44,7 @@ const EditModal = () => {
       setIsLoading(false);
     }
   }, [
+    editModal,
     bio,
     name,
     username,

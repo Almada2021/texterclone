@@ -46,7 +46,7 @@ const FormTweet: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
     } finally {
       setIsLoading(false);
     }
-  }, [body, mutatePosts, mutatePost, isComment, postId]);
+  }, [body, mutatePosts, mutatePost, isComment, postId, LengthError]);
   if (loadUser) {
     return null;
   }
