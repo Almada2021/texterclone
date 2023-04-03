@@ -18,7 +18,7 @@ A full Twitter clone with NextJS, MongoDB, NextAuth, Zustand and tailwindcss
         # You need NodeJs and npm
         npm install
     ```
-3. make a file called .env, inside the file
+3. make a file called .env, inside the root folder of the project
     ```
         DATABASE_URL=
         NEXTAUTH_JWT_SECRET=
