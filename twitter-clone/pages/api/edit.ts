@@ -28,7 +28,7 @@ export default async function handler(
         })
         return res.status(200).json(updateUser)
     } catch (error) {
-        // console.log(error)
+        console.log(error)
         res.status(400).end()
 
     }
